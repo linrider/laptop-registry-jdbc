@@ -1,0 +1,34 @@
+.idea
+out
+*.dat
+places
+Stream
+.vscode/
+
+# Other files to ignore
+*.log
+*.out
+*.tmp
+*.swp
+*~
+
+# IntelliJ IDEA specific files
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Maven target directory
+target/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Java compiled class files
+*.class
+
+# Log files
+*.log
