@@ -28,8 +28,8 @@ public class LaptopDAO {
             statement.setString(1, laptop.getModel());
             statement.setString(2, laptop.getManufacturer());
             statement.setString(3, laptop.getProdDate().format(FORMATTER));
-            statement.setString(4, String.valueOf(laptop.getRamCapacity()));
-            statement.setString(5, String.valueOf(laptop.getSsdCapacity()));
+            statement.setInt(4, laptop.getRamCapacity());
+            statement.setInt(5, laptop.getSsdCapacity());
             statement.setString(6, laptop.getCpu());
             int isDone = statement.executeUpdate();
             if (isDone > 0) {
@@ -45,20 +45,20 @@ public class LaptopDAO {
         Laptop laptop = new Laptop();
 
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement(sqlQuery)) {
-            statement.setString(1, String.valueOf(id));
-            ResultSet resultSet = statement.executeQuery();
-
+                PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                laptop.setId(Integer.parseInt("laptop_id"));
-                laptop.setModel(resultSet.getString("model"));
-                laptop.setManufacturer(resultSet.getString("manufaturer"));
-                laptop.setProdDate(LocalDate.parse(resultSet.getString("prod_date"), FORMATTER));
-                laptop.setRamCapacity(Integer.parseInt(resultSet.getString("ram_capacity")));
-                laptop.setRamCapacity(Integer.parseInt(resultSet.getString("ssd_capacity")));
-                laptop.setCpu(resultSet.getString("cpu_name"));
+                laptop.setId(resultSet.getInt(1));
+                laptop.setModel(resultSet.getString(2));
+                laptop.setManufacturer(resultSet.getString(3));
+                laptop.setProdDate(LocalDate.parse(resultSet.getString(4), FORMATTER));
+                laptop.setRamCapacity(resultSet.getInt(5));
+                laptop.setRamCapacity(resultSet.getInt(6));
+                laptop.setCpu(resultSet.getString(7));
+            } else {
+                System.out.println("Resultset is empty");
             }
-
         } catch (SQLException e) {
             System.out.println("Faild db connection");
         }
